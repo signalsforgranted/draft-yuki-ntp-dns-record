@@ -77,8 +77,14 @@ ntp-version-value = version *( "," version )
 
 The wire-format consists of one or more version identifiers, each encoded as a length-prefixed byte sequence. These length–value pairs are concatenated to form the SvcParamValue.
 
-## nts SvcParams
-( Is it useful to define nts SvcParams to indicate NTS support? )
+## NTS
+
+Time service providers offering NTS {{RFC8915}} can use SVCB records to announce the location of their NTS-KE services. This record must specify the ALPN value, however if no port number is specified clients should assume service availability on TCP 4460.
+
+The following example shows an NTS-KE service address, and implied port number.
+```
+time.example.com 3600 IN SVCB 3 nts.example.com. ( alpn="ntske/1" )
+```
 
 # Operational Sequence and Client Behavior
 The following list outlines the typical operational flow for deploying and using the NTP Resource Record, from server-side configuration to client-side version selection and communication. In practice, clients MAY perform NTP RR resolution in parallel with their default NTP initiation behavior (typically NTPv4, or NTPv5 when configured) and use the result when available.
